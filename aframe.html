@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>全景图展示-aframe</title>
+  <script src="aframe.min.js"></script>
+  <style>
+    /* 调整 input 和 a-scene 的层叠顺序 */
+    #panorama-input {
+      position: relative;
+      z-index: 9999;
+    }
+    #panorama-image {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <input type="file" id="panorama-input" accept="image/*">
+  <a-scene>
+    <a-sky id="panorama-image" rotation="0 -90 0"></a-sky>
+  </a-scene>
+
+  <script>
+    // 监听文件选择框的变化事件
+    document.getElementById('panorama-input').addEventListener('change', function(event) {
+      var file = event.target.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        var panoramaImage = document.getElementById('panorama-image');
+        panoramaImage.setAttribute('src', e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
